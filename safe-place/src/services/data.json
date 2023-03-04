@@ -1,0 +1,58 @@
+[
+    {
+        "id":"1",
+        "place_name":"Monserrate",
+        "place_addres":"Carrera 2da. Este No. 21 - 48",
+        "place_photo":"https://www.eltiempo.com/files/image_640_428/uploads/2019/04/19/5cba5f5bb4807.jpeg",
+        "place_rating": "4,5"
+    },
+    {
+        "id":"2",
+        "place_name":"Café Cultor",
+        "place_addres":"Cl. 70a #9 - 44 Casa",
+        "place_photo":"https://media-cdn.tripadvisor.com/media/photo-s/17/43/c3/6d/maridajes-deliciosos.jpg",
+        "place_rating":"3,4"
+    },
+    {
+        "id":"3",
+        "place_name":"BodyTech",
+        "place_addres":"Cra. 7 #63-25, Localidad de Chapinero",
+        "place_photo":"https://bodytech.com.co/uploads/post/620e2adafaa24579af90da33d99d16a9/paseo-villa-del-rio-1_1920x854.jpg",
+        "place_rating":"4,0"
+    },
+    {
+        "id":"4",
+        "place_name":"La Biferia",
+        "place_addres":"Cl. 109 #17 - 14, Usaquén",
+        "place_photo":"https://fastly.4sqi.net/img/general/600x600/8086052_QFnVM4DzVznZbcvdUbreSGv8iNvl_KA_0H2rHmBIeJM.jpg",
+        "place_rating":"5,0"
+    },
+    {
+        "id":"5",
+        "place_name":"Panamericana",
+        "place_addres":"Cra. 19 #17-51Sur",
+        "place_photo":"https://cloudfront-us-east-1.images.arcpublishing.com/semana/2SSHTSNWWJDJFDTYBTWH3LIKH4.jpg",
+        "place_rating":"4,8"
+    },
+    {
+        "id":"6",
+        "place_name":"C.C Titán Plaza",
+        "place_addres":"Av. Boyacá #80-94",
+        "place_photo":"https://img.lalr.co/cms/2020/08/25110421/TITAN2.jpg?size=xl",
+        "place_rating":"3,8"
+    },
+    {
+        "id":"7",
+        "place_name":"Juan Valdez Café",
+        "place_addres":"Muelle nacional, Calle 26 # 103-9, Bogotá, Cundinamarca",
+        "place_photo":"https://www.portafolio.co/files/article_multimedia/uploads/2021/06/10/60c2c87c21285.jpeg",
+        "place_rating":"4,8"
+    },
+    {
+        "id":"8",
+        "place_name":"Salitre Mágico",
+        "place_addres":"Cl. 63 #60-80, Bogotá",
+        "place_photo":"https://bogota-tours.com.co/wp-content/uploads/2019/12/Tour-Salitre-Magico-3.jpg",
+        "place_rating":"4,4"
+    }
+]
