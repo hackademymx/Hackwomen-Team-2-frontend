@@ -9,25 +9,36 @@ export default function FormSecurePlace(){
     const [form, setForm]= useState({
         name:"",
         description:"",
-        state:"",
-        street:"",
-        suburb:"",
-        number:""
+        address_state:"",
+        address_city:"",
+        address_suburb:"",
+        address_street:"",
+        address_postCode:""
+
     });
     const[formError, setFormError]=useState({
         name:{error:false, message:""},
         description:{error:false, message:""},
-        state:{error:false, message:""},
-        street:{error:false, message:""},
-        suburb:{error:false, message:""},
-        number:{error:false, message:""}
+        address_state:{error:false, message:""},
+        address_city:{error:false, message:""},
+        address_suburb:{error:false, message:""},
+        address_street:{error:false, message:""},
+        address_postCode:{error:false, message:""},
     });
 
     const [loading, setLoading] = useState(false)
 
     const handleComprove=()=>{
-        const regExpNumber=/^\d{1,6}$/
-        const {name, description, state, street, suburb, number}=form
+        const regExpZipCode = /^\d{5}$/;
+        const {
+            name,
+            description,
+            address_state, //eslint-disable-line
+            address_city, //eslint-disable-line
+            address_suburb, //eslint-disable-line
+            address_street, //eslint-disable-line
+            address_postCode, //eslint-disable-line
+        }=form;
         const internalForm={...formError}
         let isCorrect=true
 
@@ -48,46 +59,55 @@ export default function FormSecurePlace(){
             internalForm.description.error=false
             internalForm.description.message=""
         }
-
-        if (state==="") {
-            internalForm.state.error=true
-            internalForm.state.message="Completa el campo"
+         // eslint-disable-next-line
+        if (address_state=== "") { 
+            internalForm.address_state.error=true
+            internalForm.address_state.message="Completa el campo"
             isCorrect=false
         }else{
-            internalForm.state.error=false
-            internalForm.state.message=""
+            internalForm.address_state.error=false
+            internalForm.address_state.message=""
         }
-
-        if (street==="") {
-            internalForm.street.error=true
-            internalForm.street.message="Completa el campo"
+         // eslint-disable-next-line
+         if (address_city=== "") { 
+            internalForm.address_city.error=true
+            internalForm.address_city.message="Completa el campo"
             isCorrect=false
         }else{
-            internalForm.street.error=false
-            internalForm.street.message=""
+            internalForm.address_state.error=false
+            internalForm.address_state.message=""
         }
-
-        if (suburb==="") {
-            internalForm.suburb.error=true
-            internalForm.suburb.message="Completa el campo"
+        // eslint-disable-next-line
+        if (address_suburb==="") {
+            internalForm.address_suburb.error=true
+            internalForm.address_suburb.message="Completa el campo"
             isCorrect=false
         }else{
-            internalForm.suburb.error=false
-            internalForm.suburb.message=""
+            internalForm.address_suburb.error=false
+            internalForm.address_suburb.message=""
         }
-
-
-        if (number==="") {
-            internalForm.number.error=true
-            internalForm.number.message="Completa el campo"
+        // eslint-disable-next-line
+        if (address_street==="") {
+            internalForm.address_street.error=true
+            internalForm.address_street.message="Completa el campo"
             isCorrect=false
-        }else if(!regExpNumber.test(number)){
-            internalForm.number.error=true
-            internalForm.number.message="Ingresa únicamente dígitos"
+        }else{
+            internalForm.address_street.error=false
+            internalForm.address_street.message=""
+        }
+        // eslint-disable-next-line
+        if (address_postCode==="") {
+            internalForm.address_postCode.error=true
+            internalForm.address_postCode.message="Completa el campo"
+            isCorrect=false
+        }else if(!regExpZipCode.test(address_postCode)){
+            internalForm.address_postCode.error=true
+            internalForm.address_postCode.message="Ingresa únicamente dígitos"
+            isCorrect=false
         }
         else{
-            internalForm.number.error=false
-            internalForm.number.message=""
+            internalForm.address_postCode.error=false
+            internalForm.address_postCode.message=""
         }
 
         setFormError(internalForm)

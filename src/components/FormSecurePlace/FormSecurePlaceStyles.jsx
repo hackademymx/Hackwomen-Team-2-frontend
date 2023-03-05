@@ -9,17 +9,18 @@ export const DivFormSecurePlace=styled("div")({
 
 export const FormFormSecurePlace=styled("form")({
     marginTop:"10vh",
-    padding:"20px 0 20px 0",
+    padding:"20px 0 30px 0",
     width:"450px",
     minHeight:"500px",
-    border:"1px solid black"
+    boxShadow: "5px 8px 15px #aaa "
 });
 
 export const TextFieldFormSecurePlace=styled(TextField)({
     width: "90%",
-    marginBottom:"10px",
+    marginBottom:"15px",
 });
 
 export const ButtonFormSecurePlace=styled(Button)({
     width: "90%",
+    marginTop:"10px",
 })
