@@ -1,11 +1,18 @@
 import React,{useState} from "react";
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
+import  { addPlace } from "api/places";
+import Notification from "../Notification/Notification"
 import {DivFormSecurePlace, 
     FormFormSecurePlace, 
     TextFieldFormSecurePlace,
     ButtonFormSecurePlace,
 } from "./FormSecurePlaceStyles"
 
+
+
 export default function FormSecurePlace(){
+    const navigate=useNavigate()
     const [form, setForm]= useState({
         name:"",
         description:"",
@@ -13,7 +20,8 @@ export default function FormSecurePlace(){
         address_city:"",
         address_suburb:"",
         address_street:"",
-        address_postCode:""
+        address_postCode:"",
+        image:""
 
     });
     const[formError, setFormError]=useState({
@@ -24,9 +32,15 @@ export default function FormSecurePlace(){
         address_suburb:{error:false, message:""},
         address_street:{error:false, message:""},
         address_postCode:{error:false, message:""},
+        image:{error:false, message:""},
     });
 
     const [loading, setLoading] = useState(false)
+    const[notification, setNotification] = useState({
+        open: false,
+        message: "",
+        severity: "",
+    })
 
     const handleComprove=()=>{
         const regExpZipCode = /^\d{5}$/;
@@ -38,13 +52,14 @@ export default function FormSecurePlace(){
             address_suburb, //eslint-disable-line
             address_street, //eslint-disable-line
             address_postCode, //eslint-disable-line
+            image, //eslint-disable-line
         }=form;
         const internalForm={...formError}
         let isCorrect=true
 
         if (name==="") {
             internalForm.name.error=true
-            internalForm.name.message="Completa el campo"
+            internalForm.name.message="Completa el campo Nombre"
             isCorrect=false
         }else{
             internalForm.name.error=false
@@ -53,7 +68,7 @@ export default function FormSecurePlace(){
 
         if (description==="") {
             internalForm.description.error=true
-            internalForm.description.message="Completa el campo"
+            internalForm.description.message="Completa el campo Descripción"
             isCorrect=false
         }else{
             internalForm.description.error=false
@@ -62,7 +77,7 @@ export default function FormSecurePlace(){
          // eslint-disable-next-line
         if (address_state=== "") { 
             internalForm.address_state.error=true
-            internalForm.address_state.message="Completa el campo"
+            internalForm.address_state.message="Completa el campo Estado"
             isCorrect=false
         }else{
             internalForm.address_state.error=false
@@ -71,16 +86,16 @@ export default function FormSecurePlace(){
          // eslint-disable-next-line
          if (address_city=== "") { 
             internalForm.address_city.error=true
-            internalForm.address_city.message="Completa el campo"
+            internalForm.address_city.message="Completa el campo Ciudad"
             isCorrect=false
         }else{
-            internalForm.address_state.error=false
-            internalForm.address_state.message=""
+            internalForm.address_city.error=false
+            internalForm.address_city.message=""
         }
         // eslint-disable-next-line
         if (address_suburb==="") {
             internalForm.address_suburb.error=true
-            internalForm.address_suburb.message="Completa el campo"
+            internalForm.address_suburb.message="Completa el campo Colonia"
             isCorrect=false
         }else{
             internalForm.address_suburb.error=false
@@ -89,7 +104,7 @@ export default function FormSecurePlace(){
         // eslint-disable-next-line
         if (address_street==="") {
             internalForm.address_street.error=true
-            internalForm.address_street.message="Completa el campo"
+            internalForm.address_street.message="Completa el campo Calle"
             isCorrect=false
         }else{
             internalForm.address_street.error=false
@@ -98,11 +113,11 @@ export default function FormSecurePlace(){
         // eslint-disable-next-line
         if (address_postCode==="") {
             internalForm.address_postCode.error=true
-            internalForm.address_postCode.message="Completa el campo"
+            internalForm.address_postCode.message="Completa el campo Código Postal"
             isCorrect=false
         }else if(!regExpZipCode.test(address_postCode)){
             internalForm.address_postCode.error=true
-            internalForm.address_postCode.message="Ingresa únicamente dígitos"
+            internalForm.address_postCode.message="El código postal debe contener 5 digitos"
             isCorrect=false
         }
         else{
@@ -114,14 +129,27 @@ export default function FormSecurePlace(){
         return isCorrect
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         setLoading(true);
         const allFine=handleComprove()
         if (allFine) {
-            console.log("Enviando Datos");
+            console.log("Todo OK");
+            const response = await addPlace()
+            console.log("Datos enviados",response);
+
+            if (response.status!==200) {
+                setNotification({
+                    open: true,
+                    message: "Ocurrio un error",
+                    severity: "Error",
+                  });
+                  setLoading(false)
+                  return
+            }
+            navigate("/places", {replace: true});
         }
-        setLoading(false)
+        setLoading(false);
     };
 
     const handleChange = (e) => {
@@ -131,17 +159,28 @@ export default function FormSecurePlace(){
         const internalForm=form;
 
         internalForm[nameInput]= valueInput;
-    
         setForm(internalForm);
     };
 
+    const convertirBase64=(archivos)=>{
+        Array.from(archivos).forEach(archivo=>{
+            const reader=new FileReader();
+            reader.readAsDataURL(archivo);
+            reader.onload=function(){
+                const base64 = reader.result;
+                return base64.toString();
+            }
+        })
+    }
+
     return (
     <DivFormSecurePlace>
+        {notification.open&&<Notification notification={notification} setNotification={setNotification}/>}
         <FormFormSecurePlace onSubmit={handleSubmit}>
             <h1>Lugares Seguros</h1>
             <TextFieldFormSecurePlace
                 error={formError.name.error}
-                helperText={formError.name.error&&formError.name.message}
+                helperText={formError.name.error && formError.name.message}
                 id={
                     formError.name.error
                     ? "outlined-error-helper-text"
@@ -166,62 +205,85 @@ export default function FormSecurePlace(){
                 onChange={handleChange}
             />
             <TextFieldFormSecurePlace
-                error={formError.state.error}
-                helperText={formError.state.error&&formError.state.message}
+                error={formError.address_state.error}
+                helperText={formError.address_state.error&&formError.address_state.message}
                 id={
-                    formError.state.error
+                    formError.address_state.error
                     ? "outlined-error-helper-text"
                     :"outlined-basic"
                 }
                 label="Estado" 
-                name="state"
+                name="address_state"
                 variant="outlined"
                 onChange={handleChange}
             />
+
             <TextFieldFormSecurePlace
-                error={formError.street.error}
-                helperText={formError.street.error&&formError.street.message}
+                error={formError.address_city.error}
+                helperText={formError.address_city.error&&formError.address_city.message}
                 id={
-                    formError.street.error
+                    formError.address_city.error
                     ? "outlined-error-helper-text"
                     :"outlined-basic"
                 }
-                label="Calle" 
-                name="street"
+                label="Ciudad" 
+                name="address_city"
                 variant="outlined"
                 onChange={handleChange}
             />
+
             <TextFieldFormSecurePlace
-                error={formError.number.error}
-                helperText={formError.number.error&&formError.number.message}
+                error={formError.address_suburb.error}
+                helperText={formError.address_suburb.error&&formError.address_suburb.message}
                 id={
-                    formError.number.error
-                    ? "outlined-error-helper-text"
-                    :"outlined-basic"
-                }
-                label="Número" 
-                name="number"
-                variant="outlined"
-                onChange={handleChange}
-            />
-            <TextFieldFormSecurePlace
-                error={formError.suburb.error}
-                helperText={formError.suburb.error&&formError.suburb.message}
-                id={
-                    formError.suburb.error
+                    formError.address_suburb.error
                     ? "outlined-error-helper-text"
                     :"outlined-basic"
                 }
                 label="Colonia" 
-                name="suburb"
+                name="address_suburb"
                 variant="outlined"
                 onChange={handleChange}
             />
+
+            <TextFieldFormSecurePlace
+                error={formError.address_street.error}
+                helperText={formError.address_street.error&&formError.address_street.message}
+                id={
+                    formError.address_street.error
+                    ? "outlined-error-helper-text"
+                    :"outlined-basic"
+                }
+                label="Calle" 
+                name="address_street"
+                variant="outlined"
+                onChange={handleChange}
+            />
+            <TextFieldFormSecurePlace
+                error={formError.address_postCode.error}
+                helperText={formError.address_postCode.error&&formError.address_postCode.message}
+                id={
+                    formError.address_postCode.error
+                    ? "outlined-error-helper-text"
+                    :"outlined-basic"
+                }
+                label="Codigo Postal" 
+                name="address_postCode"
+                variant="outlined"
+                onChange={handleChange}
+            />
+            
+        
+                <Button name="imageButton" variant="contained" component="label">
+                    Subir Imagen
+                    <input hidden accept="image/*" multiple type="file" value={(e)=>convertirBase64(e.target.files)} onChange={handleChange}/>
+                </Button>           
+            
             <ButtonFormSecurePlace 
                 type="submit" 
                 variant="contained" 
                 color="primary"
-                desabled={loading}
+                desabled={loading.toString()}
             >
              {loading?"Enviando datos...":"Enviar Datos"}
             </ButtonFormSecurePlace>
