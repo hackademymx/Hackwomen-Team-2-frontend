@@ -5,8 +5,8 @@ export const getPlaces=async()=>{}
 
 
 export const addPlace=async(placeData)=>{
+    console.log("Places Data", placeData);
     try {
-        console.log(placeData);
         const url = `${API_URL}/places/`;
         const params={
             headers:{
