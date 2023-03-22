@@ -144,9 +144,7 @@ export default function FormSecurePlace() {
     setLoading(true);
     const allFine = handleComprove();
     if (allFine) {
-      console.log("Form", form);
       const response = await addPlace(form);
-      console.log(response);
       if (response.status !== 200) {
         setNotification({
           open: true,
