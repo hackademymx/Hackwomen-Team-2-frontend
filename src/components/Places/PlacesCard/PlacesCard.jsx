@@ -12,7 +12,7 @@ export default function PlacesCard({place}){
     return <MyCard>
     <CardMedia
       sx={{ height: 140 }}
-      image="/Asuncion.jpeg"
+      image={place.image}
       title="green iguana"
     />
     <CardContent>

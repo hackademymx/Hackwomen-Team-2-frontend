@@ -303,7 +303,7 @@ export default function FormSecurePlace() {
           type="submit"
           variant="contained"
           color="primary"
-          desabled={loading.toString()}
+          desabled={loading}
         >
           {loading ? "Enviando datos..." : "Enviar Datos"}
         </ButtonFormSecurePlace>
