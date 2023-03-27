@@ -1,17 +1,19 @@
-import { HeartOutlined } from '@ant-design/icons';
+import { HeartFilled, EditOutlined } from '@ant-design/icons';
 import {  Card, Rate  } from 'antd';
+import ReactNode from 'react'
 const { Meta } = Card;
 const Cards = (props) => (
     <Card
         style={{
             width: 300,
-    
+            margin: 10,
+            height: 380,
         }}
         cover={
             <img
                 style={{
-              
-                    maxHeight: 150,
+
+                    height: 150,
                 }}
                 alt={props.content.place_photo}
                 src={props.content.place_photo}
@@ -19,20 +21,29 @@ const Cards = (props) => (
         }
 
         actions={[
-            <Rate 
+
+            <Rate key="rate"
                 style={{
-                
+
                     color: '#DF2E38',
                 }}
-            defaultValue={parseInt(props.content.place_rating)} 
-            character={<HeartOutlined />} 
-            allowHalf />
+            allowHalf={true}
+            defaultValue={props.content.place_rating} 
+            character={<HeartFilled />} 
+            />
+
         ]}
     >
 
     <Meta
-      title={props.content.place_name}
-      description={props.content.place_addres}
+        title={props.content.place_name}
+        style={{
+            height: 125,
+        }}
+        description={<>
+        <addres>{props.content.place_addres}</addres><br></br>
+        <p>{props.content.place_description}</p>
+        </>}
     />
   </Card>
 );
