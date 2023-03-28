@@ -9,6 +9,7 @@ import { Title, Navbar } from './components'
 
 import Home from './pages/Home'
 import SiteList from './pages/SiteList'
+import Create from './pages/Create'
 
 
 export default function Router() {
@@ -18,8 +19,8 @@ export default function Router() {
 			<Navbar>
 				<Routes>
 					<Route path='/' element={<Home />} />
-
 					<Route path='/sites' element={<SiteList />} />
+					<Route path='/create' element={<Create />} />
 				</Routes>
 			</Navbar>
 		</BrowserRouter>
