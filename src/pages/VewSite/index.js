@@ -1,10 +1,11 @@
+import { ViewSite } from "../../components"
 
-function ViewSite () {
-  return (
-    <div className="App">
-        Hola Home
-    </div>
-  );
-}
-
-export default ViewSite;
+function App() {
+    return (
+      <div className="App">
+          <ViewSite />
+      </div>
+    );
+  }
+  
+  export default App;
