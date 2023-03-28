@@ -8,7 +8,7 @@ export default function HeadersComponent(props)  {
     const routes = [
         {
             key: 1,
-            label: <Link to='/'>Home <HomeOutlined/></Link>,
+            label: <Link to='/'><HomeOutlined/></Link>,
         },
         {
             key: 2,
