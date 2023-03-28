@@ -36,7 +36,7 @@ import {
           label="Nombre:"
           rules={[{ required: true, message: 'Please input Intro' }]}
         >
-          <Input />
+          <Input/>
         </Form.Item>
 
         <Form.Item

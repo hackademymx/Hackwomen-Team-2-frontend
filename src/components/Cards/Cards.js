@@ -1,4 +1,4 @@
-import { HeartFilled, EditOutlined } from '@ant-design/icons';
+import { HeartFilled } from '@ant-design/icons';
 import {  Card, Rate, Button, Dropdown, Space  } from 'antd';
 import React from 'react'
 import { Link} from 'react-router-dom'
@@ -7,37 +7,32 @@ const { Meta } = Card;
 const onMenuClick = (e) => {
     console.log('click', e);
   };
-  const items = [
-    {
-      key: '1',
-      label: <Link to='/VewSite/:id'>Ver lugar</Link>,
-    },
-    {
-      key: '2',
-      label: <Link to='/Edit/:id'>Editar</Link>,
-    },
-    {
-      key: '3',
-      label: <Link to='/Delete/:id'>Eliminar</Link>,
-      }
-    ];
-  export const App = (e) => (
-    <Space direction="vertical">
-      <Dropdown.Button
-        menu={{
-          items,
-          onClick: onMenuClick,
-        }}
-      >
-        Opciones
-      </Dropdown.Button>
-    </Space>
-  );
-
+    export const App = (id) => (
+      <Space direction="vertical">
+        <Dropdown.Button
+          menu={{
+            items: [
+              {
+                key: '1',
+                label: <Link to={`/view-site/${id}`} >Ver lugar</Link>,
+              },
+              {
+                key: '2',
+                label: <Link to={`/edit/${id}`}>Editar</Link>,
+              }
+              ],
+            onClick: onMenuClick,
+          }}
+        >
+          Opciones
+        </Dropdown.Button>
+      </Space>
+    );
+  
 const Cards = (props) => (
     <Card
         extra={
-            App()
+            App(props.content.id)
         }
         style={{
             width: 300,
