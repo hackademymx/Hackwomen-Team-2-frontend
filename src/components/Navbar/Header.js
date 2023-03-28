@@ -13,6 +13,10 @@ export default function HeadersComponent(props)  {
         {
             key: 2,
             label: <Link to='/sites'>Sitios</Link>,
+        },
+        {
+            key: 3,
+            label: <Link to='/create'>Create <HomeOutlined/></Link>,
         }
     ]
     return (
