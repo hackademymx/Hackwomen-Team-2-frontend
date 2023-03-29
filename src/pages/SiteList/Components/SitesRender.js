@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 
 
 export default function SitesRender(props) {
-
+console.log(props)
     return (
         <>
         <Row gutter={16}>
