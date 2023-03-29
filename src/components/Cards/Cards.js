@@ -45,8 +45,8 @@ const Cards = (props) => (
                     width: 300,
                     height: 150,
                 }}
-                alt={props.content.place_photo}
-                src={props.content.place_photo}
+                alt={props.content.image}
+                src={props.content.image}
             />
         }
 
@@ -58,7 +58,7 @@ const Cards = (props) => (
                     color: '#DF2E38',
                 }}
             allowHalf={true}
-            defaultValue={props.content.place_rating} 
+            defaultValue={props.content.likes.length} 
             character={<HeartFilled />} 
             />
 
@@ -66,13 +66,13 @@ const Cards = (props) => (
     >
 
     <Meta
-        title={props.content.place_name}
+        title={props.content.name}
         style={{
             height: 125,
         }}
         description={<>
-        <addres>{props.content.place_addres}</addres><br></br>
-        <p>{props.content.place_description}</p>
+        <address>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}`}</address><br></br>
+        <p>{props.content.description}</p>
         </>}
     />
   </Card>

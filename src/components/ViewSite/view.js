@@ -2,14 +2,14 @@ import React from 'react'
 import { Col, Row } from 'antd';
 import { Image } from 'antd';
 
-const App = () => (
+const App = (props) => (
     <>
     <Row>
       <Col span={9}> 
       <Image
     width={450}
     height={300}
-    src="https://www.eltiempo.com/files/image_640_428/uploads/2019/04/19/5cba5f5bb4807.jpeg"
+    src={props.place.image}
   />
   </Col>
   <Col span={15}> 
@@ -23,7 +23,7 @@ const App = () => (
     <font
         size={25}
         >
-    Monserrate
+          {props.place.name}
   </font>
   </h2>
   <p
@@ -33,14 +33,13 @@ const App = () => (
     color: 'grey'
   }}
   ><font size={3}>
-    Dirección del lugar aquí, claro que yes
     </font></p>
   <p
   style={{
     marginTop: '5%'
   }}
   ><font size={5}>
-  Una descripción un poco larga para ver que tal se ve, a ver si así se pueden posicionar bien las cosas.
+ {props.place.description}
     </font></p>
   </Col>
     </Row>
