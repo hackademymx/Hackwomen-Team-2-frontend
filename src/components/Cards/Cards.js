@@ -36,7 +36,8 @@ const Cards = (props) => (
         }
         style={{
             width: 300,
-            margin: 10,
+            marginTop: 1,
+            marginLeft: 7,
             height: 450,
         }}
         cover={
@@ -69,9 +70,10 @@ const Cards = (props) => (
         title={props.content.name}
         style={{
             height: 125,
+            lineHeight: 1
         }}
         description={<>
-        <address>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}`}</address><br></br>
+        <address>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}, ${props.content.address.postal_code}`}</address><br></br>
         <p>{props.content.description}</p>
         </>}
     />

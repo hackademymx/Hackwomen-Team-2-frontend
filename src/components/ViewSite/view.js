@@ -1,6 +1,7 @@
 import React from 'react'
 import { Col, Row } from 'antd';
-import { Image } from 'antd';
+import { Image, Rate } from 'antd';
+import { HeartFilled } from '@ant-design/icons'
 
 const App = (props) => (
     <>
@@ -41,6 +42,7 @@ const App = (props) => (
   ><font size={5}>
  {props.place.description}
     </font></p>
+    <p>{props.place.Rate} </p>
   </Col>
     </Row>
   </>
