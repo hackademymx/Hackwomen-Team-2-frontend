@@ -8,11 +8,15 @@ export default function HeadersComponent(props)  {
     const routes = [
         {
             key: 1,
-            label: <Link to='/'>Home <HomeOutlined/></Link>,
+            label: <Link to='/'><HomeOutlined/></Link>,
         },
         {
             key: 2,
             label: <Link to='/sites'>Sitios</Link>,
+        },
+        {
+            key: 3,
+            label: <Link to='/create'>Create <HomeOutlined/></Link>,
         }
     ]
     return (

@@ -1,5 +1,5 @@
 
-function App() {
+function Edit() {
   return (
     <div className="App">
         Hola Home
@@ -7,4 +7,4 @@ function App() {
   );
 }
 
-export default App;
+export default Edit;
