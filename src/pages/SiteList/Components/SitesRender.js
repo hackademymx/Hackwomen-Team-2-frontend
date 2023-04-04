@@ -7,15 +7,16 @@ export default function SitesRender(props) {
 console.log(props)
     return (
         <>
-        <Row gutter={16}>
+        <Row gutter={[6, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
             {
                 props.places.map(place => (
                     <Col 
-                        id={place.id} 
-                        className="gutter-row"  
-                        span={6}     
+                        id={place.id}
+                        className="gutter-row"      
                     >
-                        <Cards id={place.id}   content={place}/>
+                        <Cards id={place.id}
+                        name={place.name}
+                        content={place}/>
                     </Col>
                 ))
             }
