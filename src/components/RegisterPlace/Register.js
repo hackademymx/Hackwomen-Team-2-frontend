@@ -95,11 +95,11 @@ const App = () => {
       <h2>Registrar Lugar Seguro</h2>
 
         <Form.Item
-          name="name" 
+          name="nameLabel" 
           label="Nombre:"
           rules={[{ required: true, message: 'Please input Intro' }]}
         >
-          <Input />
+          <Input name="name" onChange={handleChange} value={form.name} />
         </Form.Item>
 
       <Form.Item
