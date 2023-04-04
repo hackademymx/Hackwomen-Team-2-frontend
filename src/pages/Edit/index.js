@@ -1,10 +1,11 @@
+import { EditPlace } from "../../components"
 
-function Edit() {
-  return (
-    <div className="App">
-        Hola Home
-    </div>
-  );
-}
-
-export default Edit;
+function App() {
+    return (
+      <div className="App">
+          <EditPlace />
+      </div>
+    );
+  }
+  
+  export default App;

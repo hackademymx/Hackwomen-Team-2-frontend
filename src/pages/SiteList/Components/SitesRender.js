@@ -11,10 +11,11 @@ console.log(props)
             {
                 props.places.map(place => (
                     <Col 
-                        id={place.id} 
+                        id={place.id}
                         className="gutter-row"      
                     >
-                        <Cards id={place.id} 
+                        <Cards id={place.id}
+                        name={place.name}
                         content={place}/>
                     </Col>
                 ))
