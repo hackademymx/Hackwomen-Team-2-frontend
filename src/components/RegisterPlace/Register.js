@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import axios from 'axios';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const initialForm = {
     name: "",
@@ -14,7 +14,7 @@ const initialForm = {
     city: "",
     suburb: "",
     street: "",
-    postCode: "",
+    postal_code: "",
     image: "",
 }
 const App = () => {
@@ -24,17 +24,7 @@ const App = () => {
   };
 
   const [form, setForm] = useState(initialForm);
-/*******************Probando Edit*******************************/
-  const [dataToEdit, setDataToEdit] = useState(null);
-
-  useEffect(()=>{
-    if (dataToEdit) {
-      setForm(dataToEdit);
-    }else{
-      setForm(initialForm);
-    }
-  },[dataToEdit])
-
+  
   const createData=async (placedata)=>{
     try {
       const url = `https://lugaressegurosv3.azurewebsites.net/places`;
@@ -65,7 +55,7 @@ const App = () => {
   const handleSubmit=(e)=>{
     e.preventDefault();
     console.log("Entrando al handle submit", form);
-    if (!form.name || !form.description || !form.state || !form.city || !form.suburb || !form.street || !form.postCode || !form.image) {
+    if (!form.name || !form.description || !form.state || !form.city || !form.suburb || !form.street || !form.postal_code || !form.image) {
         alert("Datos incompletos");
         return;
     }
@@ -78,14 +68,13 @@ const App = () => {
   const handleReset=(e)=>{
     console.log("Entrando a handlereset");
     setForm(initialForm);
-    setDataToEdit(null)
     console.log(form);
     
   }
 
 
   return (
-    <Form onSubmit={handleSubmit}
+    <Form 
       labelCol={{
         span: 4,
       }}
@@ -158,7 +147,7 @@ const App = () => {
         label="Código Postal"
         rules={[{ required: true, message: 'Please input Intro' }]}
         >
-        <Input name="postCode" onChange={handleChange} value={form.postCode}/>
+        <Input name="postal_code" onChange={handleChange} value={form.postal_code}/>
       </Form.Item>
 
       <Form.Item 
