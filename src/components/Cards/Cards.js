@@ -1,5 +1,5 @@
 import { HeartFilled } from '@ant-design/icons';
-import { Card, Rate, Dropdown, Button, Modal  } from 'antd';
+import { Card, Rate, Dropdown, Button, Modal } from 'antd';
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
