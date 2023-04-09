@@ -1,109 +1,128 @@
 import { HeartFilled } from '@ant-design/icons';
-import {  Card, Rate, Dropdown, Space, message, Popconfirm  } from 'antd';
-import React from 'react'
+import { Card, Rate, Dropdown, Button, Modal  } from 'antd';
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
-import {useState} from 'react'
-
-// hay que usar useState para guardar los valores
-const Data = () => {
-  const [deleted, setDeleted] = React.useState('');
-}
+import axios from 'axios'
 
 const { Meta } = Card;
-    export const App = (id, name, statusDelete) => (
-      <Space direction="vertical">
-        <Dropdown.Button
-          menu={{
-            items: [
-              {
-                key: '1',
-                label: <Link to={`/view-site/${id}`} >Ver lugar</Link>,
-              },
-              {
-                key: '2',
-                label: <Link to={`/edit/${id}`}>Editar</Link>,
-              },
-              {
-                key: '3',
-                label: <Popconfirm
-                    title={`Estás a punto de eliminar: ${name}`}
-                    description="¿Confirmas que quieres eliminar este lugar?"
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText="Confirmar"
-                    cancelText="Cancelar"
-                  >
-                    <a href="#">Eliminar</a>
-                  </Popconfirm>,
-              }
-              ],
-            onClick: onMenuClick,
-          }}
-        >
-          Opciones
-        </Dropdown.Button>
-      </Space>
-    );
-    const onMenuClick = (e) => {
-      console.log(e);
-    };
-    const confirm = (e) => {
-      console.log(e)
-      message.success(`${e} ha sido eliminado exitosamente`);
-    };
-    const cancel = (e) => {
-      console.log('cancelar')
-      message.error('Tranqui, este lugar sigue existiendo en lugares seguros :)');
-    };
-  
-const Cards = (props) => (
-    <Card
-        extra={
-            App(props.content.id, props.content.name, props.content.statusDelete)
-        }
-        style={{
-            width: 300,
-            marginTop: 1,
-            marginLeft: 7,
-            height: 450,
-        }}
-        cover={
-            <img
-                style={{
-                    width: 300,
-                    height: 150,
-                }}
-                alt={props.content.image}
-                src={props.content.image}
-            />
-        }
 
-        actions={[
+const Cards = (props) => {
+  const [modal2Open, setModal2Open] = useState(false);
+  const deleteItem = async (data) => {
+    try {
+      console.log(data)
+    data.statusDelete = true
+    const response = await axios.put(`https://lugaressegurosv3.azurewebsites.net/places/${data.id}`, data)
+    console.log(response)
+    setModal2Open(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-            <Rate
-                style={{
-
-                    color: '#DF2E38',
-                }}
-            allowHalf={true}
-            defaultValue={props.content.likes.length} 
-            character={<HeartFilled />} 
-            />
-
-        ]}
-    >
-
-    <Meta
-        title={props.content.name}
-        style={{
-            height: 125,
-            lineHeight: 1
-        }}
-        description={<>
-        <address>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}, ${props.content.address.postal_code}`}</address><br></br>
-        <p>{props.content.description}</p>
-        </>}
-    />
-  </Card>
+  const App = (id) => (
+    <Dropdown.Button
+      menu={{
+        items: [
+          {
+            key: '1',
+            label: <Button type="transparent"><Link to={`/view-site/${id}`} >Ver lugar</Link></Button>,
+          },
+          {
+            key: '2',
+            label: <Button type="transparent"><Link to={`/edit/${id}`}>Editar</Link></Button>,
+          },
+          {
+            key: '3',
+            label: <Button type="transparent" onClick={() => setModal2Open(true)}>
+            Eliminar lugar
+          </Button>
+          }
+          ]
+      }}
+    >Opciones</Dropdown.Button>
 );
+  return (
+    <>
+      <Card
+          extra={
+              App(props.content.id)
+          }
+          style={{
+              width: 300,
+              marginTop: 1,
+              marginLeft: 7,
+              height: 450,
+          }}
+          cover={
+              <img
+                  style={{
+                      width: 300,
+                      height: 150,
+                  }}
+                  alt={props.content.image}
+                  src={props.content.image}
+              />
+          }
+  
+          actions={[
+              <Rate
+                  style={{
+                    color: '#DF2E38',          
+                  }}
+              allowHalf={true}
+              defaultValue={props.content.likes.length} 
+              character={<HeartFilled />} 
+              /> 
+          ]}
+      >
+  
+      <Meta
+          title={props.content.name}
+          style={{
+              height: 125,
+              lineHeight: 1
+          }}
+          description={<>
+          <address>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}, ${props.content.address.postal_code}`}</address><br></br>
+          <p>{props.content.description}</p>
+          </>}
+      />
+    </Card>
+    <Modal
+          title={<center><h1 style={{
+            color: '#DF2E38',
+            fontSize: 25,
+            lineHeight: 1
+        }}>{`¡CUIDADO!`}<br></br>{`Estás a punto de eliminar este lugar:`}</h1></center>}
+          centered
+          open={modal2Open}
+          onOk={() => deleteItem(props.content)}
+          onCancel={() => setModal2Open(false)}
+        >
+        <center><img
+          style={{
+              width: 300,
+              height: 150,
+          }}
+          alt={props.content.image}
+          src={props.content.image}
+        /></center>
+        
+          <center><h1
+            style={{
+            lineHeight: 0,
+            fontSize: 19
+            }}
+          >{props.content.name}</h1></center>
+          <center><p>{`${props.content.address.street}, ${props.content.address.suburb}, ${props.content.address.city}, ${props.content.address.state}, ${props.content.address.postal_code}`}</p></center>
+          <center><p>{props.content.description}</p></center> 
+          <center><h1 style={{
+            color: '#C190C6',
+            fontSize: 23,
+          }} >Para eliminarlo haz click en "OK"</h1></center>
+        </Modal>
+    </>
+  );
+} 
 export default Cards;

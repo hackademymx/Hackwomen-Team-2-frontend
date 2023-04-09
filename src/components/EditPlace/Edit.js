@@ -17,7 +17,7 @@ const App = (id) => {
 
   useEffect(() => {
     // Recuperar los datos de la API utilizando el ID de la URL
-    axios.get(`https://example.com/api/${id}`)
+    axios.get(`https://lugaressegurosv3.azurewebsites.net/places/${id}`)
       .then(response => {
         setData(response.data);
       })
@@ -29,7 +29,7 @@ const App = (id) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Enviar una solicitud PUT o PATCH para actualizar la API con los datos editados
-    axios.put(`https://example.com/api/${id}`, data)
+    axios.put(`https://lugaressegurosv3.azurewebsites.net/places/${id}`, data)
       .then(response => {
         console.log(response);
       })
