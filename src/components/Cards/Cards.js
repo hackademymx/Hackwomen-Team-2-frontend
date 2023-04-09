@@ -11,6 +11,7 @@ const Cards = (props) => {
   const deleteItem = async (data) => {
     try {
       console.log(data)
+
     const response = await axios.delete(`https://lugaressegurosv3.azurewebsites.net/places/${data.id}`, data)
     console.log(response)
     setModal2Open(false)
