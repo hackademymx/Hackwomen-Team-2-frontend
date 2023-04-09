@@ -21,6 +21,7 @@ const App = (props) => {
     const value = target.value;
     const name = target.name;
 
+
     setEditedData({
       ...editedData,
       [name]: value
