@@ -20,10 +20,16 @@ export default function HeadersComponent(props)  {
         }
     ]
     return (
-            <Header>
+            <Header
+            style={{ 
+                backgroundColor: '#C190C6'
+            }}
+            >
                 <div className="logo" />
                 <Menu
-                    theme="dark"
+                    style={{ 
+                    backgroundColor: '#C190C6'
+                    }}
                     mode="horizontal" 
                     items={routes}
                 />
