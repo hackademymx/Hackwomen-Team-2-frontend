@@ -1,13 +1,15 @@
 import { HeartFilled } from '@ant-design/icons';
 import { Card, Rate, Dropdown, Button, Modal } from 'antd';
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const { Meta } = Card;
 
 const Cards = (props) => {
   const [modal2Open, setModal2Open] = useState(false);
+  let navigate = useNavigate()
+
   const deleteItem = async (data) => {
     try {
       console.log(data)
@@ -15,6 +17,7 @@ const Cards = (props) => {
     const response = await axios.delete(`https://lugaressegurosv3.azurewebsites.net/places/${data.id}`, data)
     console.log(response)
     setModal2Open(false)
+    navigate(0)
     } catch (error) {
       console.log(error)
     }
