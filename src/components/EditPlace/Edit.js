@@ -3,45 +3,32 @@ import {
   Form,
   Input,
 } from 'antd';
-import axios from 'axios';
 
-import { useState, useEffect } from 'react';
 
-const App = (id) => {
+import { useState } from 'react';
+
+const App = (props) => {
+  console.log("MI prop", props.place);
   const [componentSize, setComponentSize] = useState('default');
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
 
-  const [data, setData] = useState({});
+  const [editedData, setEditedData] = useState(props.place);
 
-  useEffect(() => {
-    // Recuperar los datos de la API utilizando el ID de la URL
-    axios.get(`https://lugaressegurosv3.azurewebsites.net/places/${id}`)
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [id]);
+  const handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Enviar una solicitud PUT o PATCH para actualizar la API con los datos editados
-    axios.put(`https://lugaressegurosv3.azurewebsites.net/places/${id}`, data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+
+    setEditedData({
+      ...editedData,
+      [name]: value
+    });
   }
 
-  const handleChange = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  }
-
+console.log("Edited", editedData.name);
 
   return (
     <Form 
@@ -69,7 +56,7 @@ const App = (id) => {
         label="Nombre:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input name="name" onChange={handleChange} value={data.name}/>
+        <Input name="name" value={editedData.name} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item
@@ -77,7 +64,7 @@ const App = (id) => {
         label="Descripción"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input.TextArea showCount maxLength={100} name="description" onChange={handleChange} value={data.description}/>
+        <Input.TextArea showCount maxLength={100} name="description" value={editedData.description} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
@@ -85,7 +72,7 @@ const App = (id) => {
         label="Estado:"
         rules={[{ required: true, message: 'Please input Intro' }]}
         >
-        <Input name="state" onChange={handleChange} value={data.state}/>
+        <Input name="state" value={editedData.state} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
@@ -93,7 +80,7 @@ const App = (id) => {
         label="Ciudad:"
         rules={[{ required: true, message: 'Please input Intro' }]}
         >
-        <Input name="city" onChange={handleChange} value={data.city}/>
+        <Input name="city" value={editedData.city} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
@@ -101,7 +88,7 @@ const App = (id) => {
         label="Colonia:"
         rules={[{ required: true, message: 'Please input Intro' }]}
         >
-        <Input name="suburb" onChange={handleChange} value={data.suburb}/>
+        <Input name="suburb" value={editedData.suburb} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
@@ -109,7 +96,7 @@ const App = (id) => {
         label="Calle:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input name="street" onChange={handleChange} value={data.street}/>
+        <Input name="street" value={editedData.street} onChange={handleInputChange}/>
       </Form.Item>
       
       <Form.Item 
@@ -117,7 +104,7 @@ const App = (id) => {
         label="Código Postal"
         rules={[{ required: true, message: 'Please input Intro' }]}
         >
-        <Input name="postal_code" onChange={handleChange} value={data.postal_code}/>
+        <Input name="postal_code" value={editedData.postal_code} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
@@ -125,13 +112,13 @@ const App = (id) => {
         label="Imagen:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input type='file' name="image" onChange={handleChange} value={data.image}/>
+        <Input type='file' name="image" value={editedData.image} onChange={handleInputChange}/>
       </Form.Item>
 
       <Form.Item 
           name="saveButton"
           label="">
-          <Button onClick={handleSubmit}>Guardar</Button>
+          <Button>Guardar</Button>
       </Form.Item>
 
     </Form>
