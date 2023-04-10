@@ -1,6 +1,7 @@
 import React from 'react'
-import { SitesRender } from './Components'
+import { SitesRender} from './Components'
 import axios from 'axios'
+import { useParams, useLocation } from 'react-router-dom'
 const data = require('../../services/data.json')
 
 const baseURL = 'https://lugaressegurosv3.azurewebsites.net/places'
