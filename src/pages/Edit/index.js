@@ -2,6 +2,7 @@ import { EditPlace } from "../../components"
 import axios from 'axios'
 import React from 'react'
 import { useParams, useLocation } from 'react-router-dom'
+import { Spin } from 'antd';
 
 const baseURL = 'https://lugaressegurosv3.azurewebsites.net/places'
 function App() {
@@ -24,7 +25,7 @@ function App() {
   },[id] )
     return (
       <div className="App">
-          <EditPlace place={place} />
+          {!place ? <Spin /> : <EditPlace place={place} /> }
       </div>
     );
   }
