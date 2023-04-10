@@ -1,124 +1,135 @@
+import React, { useState } from "react";
 import {
   Button,
   Form,
   Input,
 } from 'antd';
+import axios from 'axios'; 
+import { useEffect } from "react";
 
 
-import { useState } from 'react';
 
 const App = (props) => {
-  console.log("MI prop", props.place);
-  const [componentSize, setComponentSize] = useState('default');
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
-  };
+  
+  const [form] = Form.useForm();
+  const place=props.place
+  const [fields, setFields] = useState([
+    
+]);
 
-  const [editedData, setEditedData] = useState(props.place);
+React.useEffect(() => {
+  setFields([
+    {
+      name: ['name'],
+      value:`${place.name}`
+    },
+    {
+      name: ['description'],
+      value:`${place.description}`
+    }
 
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-
-    setEditedData({
-      ...editedData,
-      [name]: value
-    });
-  }
-
-console.log("Edited", editedData.name);
-
+  ])
+})
+  
+const editPlace =async (data)=>{
+console.log(data);
+axios.put(`https://lugaressegurosv3.azurewebsites.net/places/${props.place.id}`, data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+}
+  
   return (
     <Form 
-      labelCol={{
+     name="form"
+     form={form}
+      fields={fields}    
+      onFieldsChange={(_, allFields) => {
+        setFields(allFields);
+      }}  
+      onFinish={editPlace}
+      abelCol={{
         span: 4,
       }}
       wrapperCol={{
         span: 14,
       }}
       layout="horizontal"
-      initialValues={{
-        size: componentSize,
-      }}
-      onValuesChange={onFormLayoutChange}
-      size={componentSize}
-      style={{
-        maxWidth: 600,
-      }}
     >
 
-      <h2>Editar Lugar Seguro</h2>
+      <h2>{props.place.name}</h2>
 
       <Form.Item 
-        name="nameLabel"
+        name="name"
         label="Nombre:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input name="name" value={editedData.name} onChange={handleInputChange}/>
+        <Input/>
       </Form.Item>
 
-      <Form.Item
-        name="descriptionLabel"
-        label="Descripción"
+      <Form.Item 
+        name="description"
+        label="Descripcion:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input.TextArea showCount maxLength={100} name="description" value={editedData.description} onChange={handleInputChange}/>
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-        name="stateLabel"
+        name="state"
         label="Estado:"
         rules={[{ required: true, message: 'Please input Intro' }]}
-        >
-        <Input name="state" value={editedData.state} onChange={handleInputChange}/>
+      >
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-        name="cityLabel"
+        name="city"
         label="Ciudad:"
         rules={[{ required: true, message: 'Please input Intro' }]}
-        >
-        <Input name="city" value={editedData.city} onChange={handleInputChange}/>
+      >
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-        name="suburbLabel"
+        name="suburb"
         label="Colonia:"
         rules={[{ required: true, message: 'Please input Intro' }]}
-        >
-        <Input name="suburb" value={editedData.suburb} onChange={handleInputChange}/>
+      >
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-        name="streetLabel"
+        name="street"
         label="Calle:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input name="street" value={editedData.street} onChange={handleInputChange}/>
-      </Form.Item>
-      
-      <Form.Item 
-        name="postCodeLabel"
-        label="Código Postal"
-        rules={[{ required: true, message: 'Please input Intro' }]}
-        >
-        <Input name="postal_code" value={editedData.postal_code} onChange={handleInputChange}/>
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-        name="imageLabel"
-        label="Imagen:"
+        name="postal_code"
+        label="Codigo Postal:"
         rules={[{ required: true, message: 'Please input Intro' }]}
       >
-        <Input type='file' name="image" value={editedData.image} onChange={handleInputChange}/>
+        <Input/>
       </Form.Item>
 
       <Form.Item 
-          name="saveButton"
-          label="">
-          <Button>Guardar</Button>
+        name="image"
+        label="Image:"
+        rules={[{ required: true, message: 'Please input Intro' }]}
+      >
+        <Input/>
+      </Form.Item>
+
+      <Form.Item >
+        <Button type="primary" htmlType="submit">
+            Editar
+        </Button>
       </Form.Item>
 
     </Form>
