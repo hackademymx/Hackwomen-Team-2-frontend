@@ -27,6 +27,7 @@ const App = () => {
   const [form, setForm] = useState(initialForm);
 
   let navigate = useNavigate()
+  let statusCode = ''
   const createData=async (placedata)=>{
     try {
       const url = `https://lugaressegurosv3.azurewebsites.net/places`;
@@ -39,13 +40,16 @@ const App = () => {
       const body=JSON.stringify(placedata);
       const {data, status} = await axios.post(url,body,params);
       console.log("MI DATA", data, status);
-      return {data, status}
+      statusCode = '200'
+      return {data, status, statusCode}
 
   } catch (error) {
       const {data, status} = error.response;
-      return {data, status};
+      statusCode = '400'
+      return {data, status, statusCode};
   }
   }
+
   const handleChangeImage = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -72,7 +76,11 @@ const App = () => {
     console.log("MI FORM", form);
     createData(form);
     handleReset();
+    if (statusCode === '200'){
     navigate('/sites')
+  }else{
+    alert("No se pudo registrar este lugar")
+  }
   }
 
   const handleReset=(e)=>{
