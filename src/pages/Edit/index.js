@@ -13,7 +13,7 @@ function App() {
           method: 'get',
           url: `${baseURL}/${id}`
       });
-      console.log(response.data)
+      console.log("Get data con el id",response.data)
       setPlace(response.data);
  } catch (error) {
   console.log(error)

@@ -3,7 +3,7 @@ import {
   Form,
   Input,
 } from 'antd';
-
+import axios from 'axios'; 
 
 import { useState } from 'react';
 
@@ -27,6 +27,18 @@ const App = (props) => {
     });
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    axios.put(`https://lugaressegurosv3.azurewebsites.net/places/${props.place.id}`, editedData)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+ 
 console.log("Edited", editedData.name);
 
   return (
@@ -117,7 +129,7 @@ console.log("Edited", editedData.name);
       <Form.Item 
           name="saveButton"
           label="">
-          <Button>Guardar</Button>
+          <Button onClick={handleSubmit}>Guardar</Button>
       </Form.Item>
 
     </Form>
